@@ -17,6 +17,20 @@ const GaleriDesa = () => {
     setGaleriVideo(video)
   }, [])
 
+  // Fungsi untuk mengekstrak video ID dari URL YouTube
+  const extractYouTubeId = (url: string): string | null => {
+    const patterns = [
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
+      /youtube\.com\/watch\?.*v=([^&\n?#]+)/
+    ]
+    
+    for (const pattern of patterns) {
+      const match = url.match(pattern)
+      if (match) return match[1]
+    }
+    return null
+  }
+
   const categories = ['Semua', 'Infrastruktur', 'Sosial', 'Pertanian', 'Kesehatan', 'Ekonomi', 'Keagamaan', 'Pendidikan', 'Lainnya']
 
   const [selectedCategory, setSelectedCategory] = useState('Semua')
@@ -185,7 +199,7 @@ const GaleriDesa = () => {
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
           <div className="relative max-w-4xl max-h-full">
             <iframe
-              src={selectedVideo}
+              src={`https://www.youtube.com/embed/${extractYouTubeId(selectedVideo)}`}
               title="Video"
               className="w-full h-96"
               frameBorder="0"

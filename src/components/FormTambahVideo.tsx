@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, Save, Upload, X, Video } from 'lucide-react'
+import { ArrowLeft, Save, Video, ExternalLink } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { addGaleriVideo } from '@/lib/localStorage'
 
@@ -11,7 +11,6 @@ const FormTambahVideo = () => {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null)
-  const thumbnailInputRef = useRef<HTMLInputElement>(null)
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -26,45 +25,39 @@ const FormTambahVideo = () => {
       ...prev,
       [name]: value
     }))
+
+    // Jika URL YouTube berubah, coba ambil thumbnail otomatis
+    if (name === 'videoUrl') {
+      const videoId = extractYouTubeId(value)
+      if (videoId) {
+        const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+        setThumbnailPreview(thumbnailUrl)
+        setFormData(prev => ({
+          ...prev,
+          thumbnail: thumbnailUrl
+        }))
+      } else {
+        setThumbnailPreview(null)
+        setFormData(prev => ({
+          ...prev,
+          thumbnail: ''
+        }))
+      }
+    }
   }
 
-  const handleThumbnailUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-
-    // Validasi ukuran file (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      toast.error('Ukuran file terlalu besar. Maksimal 5MB.')
-      return
+  // Fungsi untuk mengekstrak video ID dari URL YouTube
+  const extractYouTubeId = (url: string): string | null => {
+    const patterns = [
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
+      /youtube\.com\/watch\?.*v=([^&\n?#]+)/
+    ]
+    
+    for (const pattern of patterns) {
+      const match = url.match(pattern)
+      if (match) return match[1]
     }
-
-    // Validasi tipe file
-    if (!file.type.startsWith('image/')) {
-      toast.error('File harus berupa gambar.')
-      return
-    }
-
-    const reader = new FileReader()
-    reader.onload = (event) => {
-      const result = event.target?.result as string
-      setThumbnailPreview(result)
-      setFormData(prev => ({
-        ...prev,
-        thumbnail: result
-      }))
-    }
-    reader.readAsDataURL(file)
-  }
-
-  const removeThumbnail = () => {
-    setThumbnailPreview(null)
-    setFormData(prev => ({
-      ...prev,
-      thumbnail: ''
-    }))
-    if (thumbnailInputRef.current) {
-      thumbnailInputRef.current.value = ''
-    }
+    return null
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -72,16 +65,26 @@ const FormTambahVideo = () => {
     setLoading(true)
 
     try {
-      if (!formData.thumbnail) {
-        toast.error('Thumbnail wajib diupload')
+      if (!formData.videoUrl) {
+        toast.error('URL video YouTube wajib diisi')
         setLoading(false)
         return
       }
 
-      if (!formData.videoUrl) {
-        toast.error('URL video wajib diisi')
+      const videoId = extractYouTubeId(formData.videoUrl)
+      if (!videoId) {
+        toast.error('URL YouTube tidak valid')
         setLoading(false)
         return
+      }
+
+      // Pastikan thumbnail ada
+      if (!formData.thumbnail) {
+        const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+        setFormData(prev => ({
+          ...prev,
+          thumbnail: thumbnailUrl
+        }))
       }
 
       addGaleriVideo({
@@ -109,8 +112,8 @@ const FormTambahVideo = () => {
           <ArrowLeft className="w-4 h-4 mr-2" />
           Kembali ke Dashboard
         </Link>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Tambah Video ke Galeri</h1>
-        <p className="text-gray-600">Upload video untuk ditampilkan di galeri desa</p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Tambah Video YouTube ke Galeri</h1>
+        <p className="text-gray-600">Tambahkan video YouTube untuk ditampilkan di galeri desa</p>
       </div>
 
       <form onSubmit={handleSubmit} className="card p-6">
@@ -131,22 +134,27 @@ const FormTambahVideo = () => {
             />
           </div>
 
-          {/* URL Video */}
+          {/* URL Video YouTube */}
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              URL Video (YouTube) *
+              URL Video YouTube *
             </label>
-            <input
-              type="url"
-              name="videoUrl"
-              value={formData.videoUrl}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              placeholder="https://www.youtube.com/watch?v=..."
-              required
-            />
+            <div className="relative">
+              <input
+                type="url"
+                name="videoUrl"
+                value={formData.videoUrl}
+                onChange={handleChange}
+                className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                placeholder="https://www.youtube.com/watch?v=..."
+                required
+              />
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                <ExternalLink className="h-5 w-5 text-gray-400" />
+              </div>
+            </div>
             <p className="text-xs text-gray-500 mt-1">
-              Masukkan URL video YouTube (format: https://www.youtube.com/watch?v=VIDEO_ID)
+              Masukkan URL video YouTube. Thumbnail akan diambil otomatis.
             </p>
           </div>
 
@@ -163,7 +171,7 @@ const FormTambahVideo = () => {
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               placeholder="Contoh: 5:30"
             />
-            <p className="text-xs text-gray-500 mt-1">Format: MM:SS</p>
+            <p className="text-xs text-gray-500 mt-1">Format: MM:SS (opsional)</p>
           </div>
 
           {/* Deskripsi */}
@@ -181,47 +189,28 @@ const FormTambahVideo = () => {
             />
           </div>
 
-          {/* Upload Thumbnail */}
+          {/* Preview Thumbnail */}
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Upload Thumbnail *
+              Thumbnail Video
             </label>
             {thumbnailPreview ? (
-              <div className="relative">
+              <div className="border border-gray-300 rounded-lg p-4">
                 <img
                   src={thumbnailPreview}
-                  alt="Preview"
-                  className="w-full h-64 object-cover rounded-lg border border-gray-300"
+                  alt="YouTube Thumbnail"
+                  className="w-full h-48 object-cover rounded-lg"
                 />
-                <button
-                  type="button"
-                  onClick={removeThumbnail}
-                  className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors"
-                >
-                  <X size={16} />
-                </button>
+                <p className="text-xs text-gray-500 mt-2 text-center">
+                  Thumbnail diambil otomatis dari YouTube
+                </p>
               </div>
             ) : (
               <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
                 <Video className="mx-auto h-12 w-12 text-gray-400" />
-                <div className="mt-4">
-                  <label htmlFor="thumbnail-upload" className="cursor-pointer">
-                    <span className="text-primary-600 hover:text-primary-700 font-medium">
-                      Upload thumbnail
-                    </span>
-                    <span className="text-gray-500"> atau drag and drop</span>
-                  </label>
-                  <input
-                    id="thumbnail-upload"
-                    name="thumbnail-upload"
-                    type="file"
-                    className="sr-only"
-                    accept="image/*"
-                    onChange={handleThumbnailUpload}
-                    ref={thumbnailInputRef}
-                  />
-                </div>
-                <p className="text-xs text-gray-500 mt-2">PNG, JPG, GIF hingga 5MB</p>
+                <p className="text-gray-500 mt-2">
+                  Masukkan URL YouTube untuk melihat thumbnail
+                </p>
               </div>
             )}
           </div>

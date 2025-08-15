@@ -1,15 +1,12 @@
-import Header from '@/components/Header'
+import AuthGuard from '@/components/AuthGuard'
 import FormTambahFoto from '@/components/FormTambahFoto'
-import Footer from '@/components/Footer'
 
 export default function TambahFotoPage() {
   return (
-    <main>
-      <Header />
+    <AuthGuard>
       <div className="container mx-auto px-4 py-8">
         <FormTambahFoto />
       </div>
-      <Footer />
-    </main>
+    </AuthGuard>
   )
 } 

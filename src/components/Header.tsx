@@ -2,7 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Menu, X } from 'lucide-react'
+import Image from 'next/image'
+import { Menu, X, Settings } from 'lucide-react'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -21,9 +22,17 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">B</span>
+          <Link href="/" className="flex items-center space-x-3">
+            <div className="w-12 h-12 relative">
+              {/* Logo dari file */}
+              <Image
+                src="/images/logo.png"
+                alt="Logo Desa Bontobunga"
+                width={48}
+                height={48}
+                className="object-contain"
+                priority
+              />
             </div>
             <div>
               <h1 className="text-xl font-bold text-gray-900">Desa Bontobunga</h1>
@@ -32,17 +41,28 @@ const Header = () => {
           </Link>
 
           {/* Desktop Menu */}
-          <nav className="hidden md:flex space-x-8">
-            {menuItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-gray-700 hover:text-primary-600 font-medium transition-colors"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
+          <div className="hidden md:flex items-center space-x-8">
+            <nav className="flex space-x-8">
+              {menuItems.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="text-gray-700 hover:text-primary-600 font-medium transition-colors"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+            
+            {/* Admin Button */}
+            <Link
+              href="/admin/login"
+              className="flex items-center gap-2 px-3 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors text-sm font-medium"
+            >
+              <Settings size={16} />
+              Admin
+            </Link>
+          </div>
 
           {/* Mobile Menu Button */}
           <button
@@ -67,6 +87,16 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
+              
+              {/* Admin Button for Mobile */}
+              <Link
+                href="/admin/login"
+                className="flex items-center gap-2 px-3 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors text-sm font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <Settings size={16} />
+                Admin
+              </Link>
             </nav>
           </div>
         )}

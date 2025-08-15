@@ -1,16 +1,23 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Mail, Phone, MapPin } from 'lucide-react'
 
 const Footer = () => {
   return (
-    <footer className="bg-[#2185D5] text-white">
+    <footer className="bg-primary-600 text-white">
       <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Logo dan Deskripsi */}
           <div className="md:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">B</span>
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-12 h-12 relative">
+                <Image
+                  src="/images/logo.png"
+                  alt="Logo Desa Bontobunga"
+                  width={48}
+                  height={48}
+                  className="object-contain"
+                />
               </div>
               <div>
                 <h3 className="text-xl font-bold">Desa Bontobunga</h3>
