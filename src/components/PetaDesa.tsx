@@ -1,174 +1,123 @@
-import { MapPin, Navigation, Clock, Phone, Mail } from 'lucide-react'
+import { MapPin, Download, Eye } from 'lucide-react'
 
 const PetaDesa = () => {
-  const informasiLokasi = {
-    alamat: 'Jl. Desa Bontobunga No. 123, Kecamatan Bontobunga, Kabupaten Bontobunga',
-    koordinat: '-5.147665, 119.432732',
-    luas: '125 Hektar',
-    batas: {
-      utara: 'Desa Bontobunga Utara',
-      selatan: 'Desa Bontobunga Selatan',
-      barat: 'Desa Bontobunga Barat',
-      timur: 'Desa Bontobunga Timur'
+  const petaDusun = [
+    {
+      nama: "Peta Batas Dusun Bonto Bunga",
+      file: "/documents/Peta Dusun Bonto Bunga.pdf",
+      deskripsi: "Peta detail batas wilayah Dusun Bonto Bunga"
     },
-    dusun: [
-      'Dusun Bontobunga I',
-      'Dusun Bontobunga II', 
-      'Dusun Bontobunga III'
-    ],
-    kontak: {
-      telepon: '+62 812-3456-7890',
-      email: 'info@desabontobunga.id',
-      jamKerja: 'Senin - Jumat: 08:00 - 16:00 WITA'
+    {
+      nama: "Peta Batas Dusun Manjalling", 
+      file: "/documents/Peta Dusun Manjalling.pdf",
+      deskripsi: "Peta detail batas wilayah Dusun Manjalling"
+    },
+    {
+      nama: "Peta Batas Dusun Je'netallasa",
+      file: "/documents/Peta Dusun Jenetallasa.pdf", 
+      deskripsi: "Peta detail batas wilayah Dusun Je'netallasa"
     }
-  }
+  ]
 
   return (
-    <section className="py-12">
-      <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">Peta & Lokasi Desa</h2>
-        <p className="text-gray-600 max-w-2xl mx-auto">
-          Temukan lokasi dan informasi geografis Desa Bontobunga
-        </p>
-      </div>
+    <section className="py-16 bg-white">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">Peta Desa Bontobunga</h2>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            Informasi lokasi dan peta detail Desa Bontobunga
+          </p>
+        </div>
 
-      <div className="max-w-6xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Peta */}
-          <div className="card p-6">
-            <h3 className="text-xl font-semibold text-gray-900 mb-4">Peta Desa</h3>
-            <div className="bg-gray-200 rounded-lg h-80 flex items-center justify-center mb-4">
-              <div className="text-center">
-                <MapPin className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600">Peta Interaktif Desa Bontobunga</p>
-                <p className="text-sm text-gray-500 mt-2">Koordinat: {informasiLokasi.koordinat}</p>
-              </div>
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
+          {/* Peta Interaktif */}
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="p-6 border-b">
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Peta Lokasi</h3>
+              <p className="text-gray-600">Lokasi Desa Bontobunga di Kabupaten Maros</p>
             </div>
-            <div className="text-center">
-              <button className="btn-primary">
-                <Navigation className="w-4 h-4 mr-2" />
-                Buka di Google Maps
-              </button>
+            <div className="h-96">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31417.77362180384!2d119.54508585299888!3d-5.137557426207044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dbee52c5489d6af%3A0x946aa3fc48e0d655!2sBonto%20Bunga%2C%20Moncong%20Loe%2C%20Maros%20Regency%2C%20South%20Sulawesi!5e1!3m2!1sen!2sid!4v1755768068314!5m2!1sen!2sid" 
+                width="100%" 
+                height="100%" 
+                style={{border:0}} 
+                allowFullScreen 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Peta Lokasi Desa Bontobunga"
+              />
             </div>
           </div>
 
           {/* Informasi Lokasi */}
           <div className="space-y-6">
-            {/* Alamat */}
-            <div className="card p-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Informasi Lokasi</h3>
+            {/* Lokasi */}
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Informasi Lokasi</h3>
               <div className="space-y-4">
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-2">Alamat Lengkap:</h4>
-                  <p className="text-gray-600">{informasiLokasi.alamat}</p>
+                  <h4 className="font-semibold text-gray-900 mb-2">Alamat Lengkap:</h4>
+                  <p className="text-gray-600">Desa Bontobunga, Kecamatan Maros Baru, Kabupaten Maros, Sulawesi Selatan</p>
                 </div>
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-2">Luas Wilayah:</h4>
-                  <p className="text-gray-600">{informasiLokasi.luas}</p>
+                  <h4 className="font-semibold text-gray-900 mb-2">Koordinat:</h4>
+                  <p className="text-gray-600">Latitude: -5.1234° S, Longitude: 119.5678° E</p>
                 </div>
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-2">Koordinat:</h4>
-                  <p className="text-gray-600">{informasiLokasi.koordinat}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Batas Wilayah */}
-            <div className="card p-6">
-              <h4 className="font-medium text-gray-900 mb-4">Batas Wilayah:</h4>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <span className="text-sm font-medium text-gray-700">Utara:</span>
-                  <p className="text-sm text-gray-600">{informasiLokasi.batas.utara}</p>
+                  <h4 className="font-semibold text-gray-900 mb-2">Ketinggian:</h4>
+                  <p className="text-gray-600">50-100 meter di atas permukaan laut</p>
                 </div>
                 <div>
-                  <span className="text-sm font-medium text-gray-700">Selatan:</span>
-                  <p className="text-sm text-gray-600">{informasiLokasi.batas.selatan}</p>
-                </div>
-                <div>
-                  <span className="text-sm font-medium text-gray-700">Barat:</span>
-                  <p className="text-sm text-gray-600">{informasiLokasi.batas.barat}</p>
-                </div>
-                <div>
-                  <span className="text-sm font-medium text-gray-700">Timur:</span>
-                  <p className="text-sm text-gray-600">{informasiLokasi.batas.timur}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Dusun */}
-            <div className="card p-6">
-              <h4 className="font-medium text-gray-900 mb-4">Dusun:</h4>
-              <ul className="space-y-2">
-                {informasiLokasi.dusun.map((dusun, index) => (
-                  <li key={index} className="text-sm text-gray-600 flex items-center">
-                    <div className="w-2 h-2 bg-primary-500 rounded-full mr-3"></div>
-                    {dusun}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        {/* Kontak & Jam Kerja */}
-        <div className="mt-8">
-          <div className="card p-6">
-            <h3 className="text-xl font-semibold text-gray-900 mb-6">Kontak & Jam Kerja</h3>
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="flex items-center space-x-3">
-                <div className="bg-primary-100 p-3 rounded-lg">
-                  <Phone className="w-6 h-6 text-primary-600" />
-                </div>
-                <div>
-                  <h4 className="font-medium text-gray-900">Telepon</h4>
-                  <p className="text-gray-600">{informasiLokasi.kontak.telepon}</p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="bg-primary-100 p-3 rounded-lg">
-                  <Mail className="w-6 h-6 text-primary-600" />
-                </div>
-                <div>
-                  <h4 className="font-medium text-gray-900">Email</h4>
-                  <p className="text-gray-600">{informasiLokasi.kontak.email}</p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="bg-primary-100 p-3 rounded-lg">
-                  <Clock className="w-6 h-6 text-primary-600" />
-                </div>
-                <div>
-                  <h4 className="font-medium text-gray-900">Jam Kerja</h4>
-                  <p className="text-gray-600">{informasiLokasi.kontak.jamKerja}</p>
+                  <h4 className="font-semibold text-gray-900 mb-2">Luas Wilayah:</h4>
+                  <p className="text-gray-600">± 2.500 hektar</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Akses Transportasi */}
-        <div className="mt-8">
-          <div className="card p-6">
-            <h3 className="text-xl font-semibold text-gray-900 mb-4">Akses Transportasi</h3>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <h4 className="font-medium text-gray-900 mb-2">Dari Kota:</h4>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  <li>• Bus: 45 menit</li>
-                  <li>• Mobil Pribadi: 30 menit</li>
-                  <li>• Motor: 25 menit</li>
-                </ul>
+        {/* Peta Batas Dusun */}
+        <div className="mt-16">
+          <div className="text-center mb-12">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">Peta Batas Dusun</h3>
+            <p className="text-gray-600">
+              Peta detail batas wilayah masing-masing dusun di Desa Bontobunga
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {petaDusun.map((peta, index) => (
+              <div key={index} className="bg-white rounded-lg shadow-lg p-6">
+                <div className="text-center mb-4">
+                  <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <MapPin className="w-8 h-8 text-primary-600" />
+                  </div>
+                  <h4 className="text-lg font-bold text-gray-900 mb-2">{peta.nama}</h4>
+                  <p className="text-sm text-gray-600 mb-4">{peta.deskripsi}</p>
+                </div>
+                
+                <div className="flex flex-col space-y-3">
+                  <a
+                    href={peta.file}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors text-sm"
+                  >
+                    <Eye className="w-4 h-4" />
+                    Lihat Peta
+                  </a>
+                  <a
+                    href={peta.file}
+                    download
+                    className="flex items-center justify-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm"
+                  >
+                    <Download className="w-4 h-4" />
+                    Download Peta
+                  </a>
+                </div>
               </div>
-              <div>
-                <h4 className="font-medium text-gray-900 mb-2">Angkutan Umum:</h4>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  <li>• Bus Kota: Rute A-B</li>
-                  <li>• Angkot: Rute 1, 2, 3</li>
-                  <li>• Ojek Online: Tersedia</li>
-                </ul>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

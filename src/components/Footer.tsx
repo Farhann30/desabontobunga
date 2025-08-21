@@ -35,18 +35,8 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Menu Cepat</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="/profil" className="text-gray-300 hover:text-white transition-colors">
-                  Profil Desa
-                </Link>
-              </li>
-              <li>
                 <Link href="/berita" className="text-gray-300 hover:text-white transition-colors">
                   Berita & Pengumuman
-                </Link>
-              </li>
-              <li>
-                <Link href="/layanan" className="text-gray-300 hover:text-white transition-colors">
-                  Layanan Masyarakat
                 </Link>
               </li>
               <li>

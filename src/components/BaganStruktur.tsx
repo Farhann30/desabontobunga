@@ -1,124 +1,231 @@
-import { Users, Shield, Award, UserCheck } from 'lucide-react'
+'use client'
 
-const BaganStruktur = () => {
-  const strukturPemerintahan = [
+import { useState, useEffect } from 'react'
+import { Mail, Phone, MapPin, Users, Target, Eye, ChevronLeft, ChevronRight } from 'lucide-react'
+
+const VisiMisi = () => {
+  const [currentSlide, setCurrentSlide] = useState(0)
+
+  const strukturDesa = [
     {
-      level: 1,
-      title: 'Kepala Desa',
-      name: 'Ahmad Sulaiman',
-      period: '2021 - 2027',
-      icon: Shield,
-      description: 'Pemimpin tertinggi di tingkat desa yang bertanggung jawab atas seluruh penyelenggaraan pemerintahan desa.'
+      nama: "H. M. NASIR, S. Ag",
+      jabatan: "Kepala Desa",
+      email: "nasir11111974@gmail.com",
+      foto: "/images/struktur/kepala_desa.jpeg"
     },
     {
-      level: 2,
-      title: 'Sekretaris Desa',
-      name: 'Siti Nurhaliza',
-      period: '2021 - 2027',
-      icon: Users,
-      description: 'Membantu kepala desa dalam melaksanakan urusan pemerintahan, pembangunan, dan kemasyarakatan.'
+      nama: "SITTI SARAH",
+      jabatan: "Sekretaris Desa",
+      email: "stsarah0412@gmail.com",
+      foto: "/images/struktur/sekdes.jpeg"
     },
     {
-      level: 3,
-      title: 'Kasi Pemerintahan',
-      name: 'Budi Santoso',
-      period: '2021 - 2027',
-      icon: UserCheck,
-      description: 'Bertanggung jawab atas urusan administrasi kependudukan, pertanahan, dan ketentraman.'
+      nama: "ST. RAMLAH",
+      jabatan: "Kasi Pemerintahan",
+      email: "stramlah567@gmail.com",
+      foto: "/images/struktur/Kasi Pemerintah.jpeg"
     },
     {
-      level: 3,
-      title: 'Kasi Kesejahteraan',
-      name: 'Dewi Sartika',
-      period: '2021 - 2027',
-      icon: Award,
-      description: 'Bertanggung jawab atas urusan sosial, kesehatan, pendidikan, dan pemberdayaan masyarakat.'
+      nama: "Muhammad Darwin",
+      jabatan: "Kasi Kesejahteraan",
+      email: "Wiwing092811@gmail.com",
+      foto: "/images/struktur/Kasi Kesejahteraan.jpeg"
     },
     {
-      level: 3,
-      title: 'Kasi Pelayanan',
-      name: 'Rudi Hartono',
-      period: '2021 - 2027',
-      icon: Users,
-      description: 'Bertanggung jawab atas urusan pelayanan administrasi dan pelayanan umum kepada masyarakat.'
+      nama: "Munawir S.Pd",
+      jabatan: "Kaur Perencanaan",
+      email: "nawirnawir61@gmail.com",
+      foto: "/images/struktur/Kaur Perencanaan.jpeg"
+    },
+    {
+      nama: "Muh arfa",
+      jabatan: "Kaur Umum",
+      email: "arfamhmmd34@gmail.com",
+      foto: "/images/struktur/kaur umum.jpeg"
+    },
+    {
+      nama: "Sitti Fatimah",
+      jabatan: "Kaur Keuangan",
+      email: "Sitti.fatimah1357@gmail.com",
+      foto: "/images/struktur/kaur keungan.jpeg"
+    },
+    {
+      nama: "Hariani",
+      jabatan: "Staff Kaur Keuangan",
+      email: "harianianhi6@gmail.com",
+      foto: "/images/struktur/staff kaur keuangan.jpeg"
+    },
+    {
+      nama: "ISRAFIL",
+      jabatan: "Staf Kasi",
+      email: "Apil0124@gmail.com",
+      foto: "/images/struktur/WhatsApp Image 2025-08-19 at 09.44.51 (1).jpeg"
+    },
+    {
+      nama: "Nadia",
+      jabatan: "Staf Kaur Perencanaan",
+      email: "nadiaa14feb06@gmail.com",
+      foto: "/images/struktur/WhatsApp Image 2025-08-19 at 09.44.51 (2).jpeg"
+    },
+    {
+      nama: "DJUPRI, HS",
+      jabatan: "Kepala Dusun Bonto Bunga",
+      email: "sukaenajufri@gmail.com",
+      foto: "/images/struktur/WhatsApp Image 2025-08-19 at 09.44.52.jpeg"
+    },
+    {
+      nama: "Mustari",
+      jabatan: "Kepala Dusun Manjalling",
+      email: "firhanrayyan1234@gmail.com",
+      foto: "/images/struktur/WhatsApp Image 2025-08-19 at 09.44.52 (1).jpeg"
+    },
+    {
+      nama: "ABDUL RAHIM",
+      jabatan: "Kepala Dusun Je'netallasa",
+      email: "ar6492406@gmail.com",
+      foto: "/images/struktur/WhatsApp Image 2025-08-19 at 09.44.52 (2).jpeg"
     }
   ]
 
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % strukturDesa.length)
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + strukturDesa.length) % strukturDesa.length)
+  }
+
+  // Auto slide setiap 5 detik
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextSlide()
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
-    <section className="py-12 bg-gray-50">
-      <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">Struktur Pemerintahan Desa</h2>
-        <p className="text-gray-600 max-w-2xl mx-auto">
-          Kenali struktur organisasi dan perangkat desa yang mengelola pemerintahan Desa Bontobunga
-        </p>
-      </div>
+    <section className="py-16 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">Visi & Misi Desa Bontobunga</h2>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            Visi dan misi yang menjadi pedoman dalam pembangunan dan pengembangan Desa Bontobunga
+          </p>
+        </div>
 
-      <div className="max-w-6xl mx-auto">
-        {/* Kepala Desa - Level Tertinggi */}
-        <div className="flex justify-center mb-8">
-          <div className="card p-6 text-center max-w-md">
-            <div className="bg-primary-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Shield className="w-10 h-10 text-primary-600" />
+        {/* Visi Misi Cards */}
+        <div className="grid md:grid-cols-2 gap-8 mb-16">
+          {/* Visi */}
+          <div className="bg-white rounded-lg shadow-lg p-8">
+            <div className="flex items-center mb-6">
+              <div className="w-12 h-12 bg-primary-600 rounded-lg flex items-center justify-center mr-4">
+                <Eye className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900">Visi</h3>
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">{strukturPemerintahan[0].title}</h3>
-            <p className="text-lg font-semibold text-primary-600 mb-1">{strukturPemerintahan[0].name}</p>
-            <p className="text-sm text-gray-500 mb-3">{strukturPemerintahan[0].period}</p>
-            <p className="text-gray-600 text-sm">{strukturPemerintahan[0].description}</p>
+            <p className="text-gray-700 text-lg leading-relaxed">
+              "Terwujudnya Desa Bontobunga yang Maju, Mandiri, dan Sejahtera dengan Masyarakat yang Berakhlak Mulia"
+            </p>
+          </div>
+
+          {/* Misi */}
+          <div className="bg-white rounded-lg shadow-lg p-8">
+            <div className="flex items-center mb-6">
+              <div className="w-12 h-12 bg-primary-600 rounded-lg flex items-center justify-center mr-4">
+                <Target className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900">Misi</h3>
+            </div>
+            <div className="space-y-3">
+              <p className="text-gray-700">1. Meningkatkan kualitas pendidikan dan kesehatan masyarakat</p>
+              <p className="text-gray-700">2. Mengembangkan ekonomi kerakyatan berbasis potensi lokal</p>
+              <p className="text-gray-700">3. Membangun infrastruktur desa yang berkelanjutan</p>
+              <p className="text-gray-700">4. Meningkatkan pelayanan publik yang transparan dan akuntabel</p>
+              <p className="text-gray-700">5. Mempertahankan dan mengembangkan nilai-nilai budaya lokal</p>
+            </div>
           </div>
         </div>
 
-        {/* Sekretaris Desa */}
-        <div className="flex justify-center mb-8">
-          <div className="card p-6 text-center max-w-md">
-            <div className="bg-secondary-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Users className="w-10 h-10 text-secondary-600" />
+        {/* Struktur Pemerintahan Desa - Slider */}
+        <div className="text-center mb-12">
+          <h3 className="text-2xl font-bold text-gray-900 mb-4">Struktur Pemerintahan Desa</h3>
+          <p className="text-gray-600">
+            Tim kerja yang berdedikasi untuk melayani masyarakat Desa Bontobunga
+          </p>
+        </div>
+
+        <div className="relative max-w-4xl mx-auto">
+          {/* Navigation Buttons */}
+          <button
+            onClick={prevSlide}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-50 transition-colors"
+          >
+            <ChevronLeft className="w-6 h-6 text-gray-600" />
+          </button>
+          
+          <button
+            onClick={nextSlide}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-50 transition-colors"
+          >
+            <ChevronRight className="w-6 h-6 text-gray-600" />
+          </button>
+
+          {/* Slider Container */}
+          <div className="overflow-hidden rounded-lg">
+            <div 
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+            >
+              {strukturDesa.map((person, index) => (
+                <div key={index} className="w-full flex-shrink-0">
+                  <div className="bg-white rounded-lg shadow-lg p-8 mx-4">
+                    <div className="text-center">
+                      {/* Foto */}
+                      <div className="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
+                        <img
+                          src={person.foto}
+                          alt={person.nama}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            // Fallback jika foto tidak ada
+                            const target = e.currentTarget as HTMLImageElement
+                            target.style.display = 'none'
+                            const nextElement = target.nextElementSibling as HTMLElement
+                            if (nextElement) {
+                              nextElement.style.display = 'flex'
+                            }
+                          }}
+                        />
+                        <div className="w-full h-full bg-primary-100 flex items-center justify-center" style={{ display: 'none' }}>
+                          <Users className="w-12 h-12 text-primary-600" />
+                        </div>
+                      </div>
+                      
+                      {/* Info */}
+                      <h4 className="text-xl font-bold text-gray-900 mb-2">{person.nama}</h4>
+                      <p className="text-lg text-primary-600 font-medium mb-4">{person.jabatan}</p>
+                      <div className="flex items-center justify-center text-gray-600">
+                        <Mail className="w-4 h-4 mr-2" />
+                        <span className="text-sm">{person.email}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">{strukturPemerintahan[1].title}</h3>
-            <p className="text-lg font-semibold text-secondary-600 mb-1">{strukturPemerintahan[1].name}</p>
-            <p className="text-sm text-gray-500 mb-3">{strukturPemerintahan[1].period}</p>
-            <p className="text-gray-600 text-sm">{strukturPemerintahan[1].description}</p>
           </div>
-        </div>
 
-        {/* Kasi - Level Ketiga */}
-        <div className="grid md:grid-cols-3 gap-6">
-          {strukturPemerintahan.slice(2).map((kasi, index) => (
-            <div key={index} className="card p-6 text-center">
-              <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <kasi.icon className="w-8 h-8 text-green-600" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">{kasi.title}</h3>
-              <p className="text-md font-semibold text-green-600 mb-1">{kasi.name}</p>
-              <p className="text-sm text-gray-500 mb-3">{kasi.period}</p>
-              <p className="text-gray-600 text-sm">{kasi.description}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Informasi Tambahan */}
-        <div className="mt-12 text-center">
-          <div className="bg-white rounded-lg p-6 shadow-sm border">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Informasi Struktur</h3>
-            <div className="grid md:grid-cols-2 gap-6 text-left">
-              <div>
-                <h4 className="font-medium text-gray-900 mb-2">Tugas & Fungsi:</h4>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  <li>• Melaksanakan urusan pemerintahan desa</li>
-                  <li>• Melaksanakan pembangunan desa</li>
-                  <li>• Melaksanakan pembinaan kemasyarakatan</li>
-                  <li>• Melaksanakan pemberdayaan masyarakat</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-medium text-gray-900 mb-2">Periode Jabatan:</h4>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  <li>• Kepala Desa: 6 tahun (2021-2027)</li>
-                  <li>• Perangkat Desa: Sesuai masa jabatan</li>
-                  <li>• Dapat dipilih kembali untuk 1 kali masa jabatan</li>
-                  <li>• Pemilihan melalui musyawarah desa</li>
-                </ul>
-              </div>
-            </div>
+          {/* Dots Indicator */}
+          <div className="flex justify-center mt-6 space-x-2">
+            {strukturDesa.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentSlide(index)}
+                className={`w-3 h-3 rounded-full transition-colors ${
+                  index === currentSlide ? 'bg-primary-600' : 'bg-gray-300'
+                }`}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -126,4 +233,4 @@ const BaganStruktur = () => {
   )
 }
 
-export default BaganStruktur 
+export default VisiMisi 

@@ -10,9 +10,7 @@ const Header = () => {
 
   const menuItems = [
     { name: 'Beranda', href: '/' },
-    { name: 'Profil Desa', href: '/profil' },
     { name: 'Berita', href: '/berita' },
-    { name: 'Layanan', href: '/layanan' },
     { name: 'Galeri', href: '/galeri' },
     { name: 'Kontak', href: '/kontak' },
   ]
